@@ -47,7 +47,7 @@ function movie(){
     console.log("--------------------------"); 
     console.log("Country where the movie was produced: " + JSON.parse(body).Country);
     console.log("--------------------------"); 
-    console.log("Language of the movie: " + JSON.parse(body).Year);
+    console.log("Language of the movie: " + JSON.parse(body).Language);
     console.log("--------------------------"); 
     console.log("Plot of the movie: " + JSON.parse(body).Plot);
     console.log("--------------------------"); 
