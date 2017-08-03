@@ -10,6 +10,7 @@ var getKeys = require("./keys.js");
 var keyTwitter = getKeys.twitterKeys;
 var keySpotify = getKeys.spotifyKeys;
 var count = 0;
+var fs = require("fs");
 var clientSpotify = new Spotify(keySpotify);
 var clientTwitter = new Twitter(keyTwitter);
 
@@ -17,6 +18,9 @@ for (var i = 3; i < fullOption.length; i++) {
   input = input + " " + fullOption[i];
 }
 
+logic(option, input);
+
+function logic(option, input){
 if (option == "my-tweets"){
     if (count < 20){
         twit();
@@ -26,9 +30,22 @@ if (option == "my-tweets"){
     artist();
 }else if (option == "movie-this"){
     movie();
+} else if (option == "do-what-it-says"){
+    function textFile(){
+    fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+    return console.log(error);
+  }
+  console.log(data);
+  var dataArr = data.split(",");
+  input = dataArr[1];
+  option = dataArr[0];
+});
+}}
 }
 
-function movie(){
+
+function movie(data){
     var queryUrl = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=40e9cece";
     console.log(queryUrl);
 
@@ -61,8 +78,8 @@ function movie(){
 
 
 
-function artist (){
-    clientSpotify.search({ type: 'track', query: input})
+function artist (data){
+    clientSpotify.search({ type: 'track', query: input, data})
   .then(function(response) {
     console.log("--------------------------"); 
     console.log("Artist: " + response.tracks.items[1].artists[0].name);
